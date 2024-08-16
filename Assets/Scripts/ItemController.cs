@@ -13,6 +13,7 @@ public class ItemController : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             Destroy();
+            GameObject.Destroy(gameObject);
         }
     }
     public void Destroy()
