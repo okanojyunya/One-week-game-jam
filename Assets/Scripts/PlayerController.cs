@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    /// <summary>プレイヤーのHP</summary>
+    [SerializeField] int m_hp = 0;
     /// <summary>移動力</summary>
     [SerializeField] float m_speed = 3f;
     /// <summary>ジャンプ速度</summary>
@@ -47,6 +49,11 @@ public class PlayerController : MonoBehaviour
         {
             //ここにプレイヤーのHPを減らす処理を書く
             //プレイヤーのHPは3にする（ストック性）
+            m_hp -= 1;
+            if (m_hp == 0)
+            {
+                GameObject.Destroy(gameObject);
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

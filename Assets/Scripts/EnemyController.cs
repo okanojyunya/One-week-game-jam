@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +11,9 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+        //nullチェックを入れる
+        //NullCheck();
+
     }
     void Update()
     {
@@ -28,6 +32,14 @@ public class EnemyController : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             GameObject.Destroy(gameObject);
+        }
+    }
+    /// <summary>nullチェックのコード/summary>
+    void NullCheck()
+    { 
+        if (playerTr == null)
+        {
+            transform.position = Vector2.zero;
         }
     }
 }
