@@ -6,11 +6,7 @@ using UnityEngine;
 //Rキーを押したら機能するようにする
 public class ItemController : MonoBehaviour
 {
-    
-    void Start()
-    {
-        
-    }
+    Vector3 pos;
     void Update()
     {
         //Rキーを押したらデストロイさせる
@@ -25,6 +21,17 @@ public class ItemController : MonoBehaviour
         foreach(GameObject enemy_destroys in destroys)
         {
             Destroy(enemy_destroys);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //プレイヤーが触れたらアイテムスロットに移動する
+        if (collision.CompareTag("Player"))
+        {
+            pos.x = ItemManage.instance.ItemSlot.transform.position.x;
+            pos.y = ItemManage.instance.ItemSlot.transform.position.y;
+            pos.z = 0;
+            transform.position = pos;
         }
         
     }
