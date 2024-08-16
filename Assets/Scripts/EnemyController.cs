@@ -16,10 +16,18 @@ public class EnemyController : MonoBehaviour
         //プレイヤーとの距離が0.1f未満になったらそれ以上実行しない
         if (Vector2.Distance(transform.position, playerTr.position) < 0.1f)
             return;
+            
         //プレイヤーに向けて進む
         transform.position = Vector2.MoveTowards(
             transform.position,
             new Vector2(playerTr.position.x, playerTr.position.y),
             speed * Time.deltaTime);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (GameObject.FindGameObjectWithTag("Player"))
+        {
+            GameObject.Destroy(gameObject);
+        }
     }
 }

@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         m_isGrounded = true;
+        if (GameObject.FindGameObjectWithTag("Enemy"))
+        {
+            //ここにプレイヤーのHPを減らす処理を書く
+            //プレイヤーのHPは3にする（ストック性）
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
