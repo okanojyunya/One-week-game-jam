@@ -1,34 +1,51 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    [SerializeField]//ジャンプ力
-    float JumpForce = 0f;
-    [SerializeField]//スピード
-    float Speed = 1f;
-    float xSpeed = 0f;
+    /// <summary>移動力</summary>
+    [SerializeField] float m_speed = 3f;
+    /// <summary>ジャンプ速度</summary>
+    [SerializeField] float m_jumpSpeed = 5f;
+    /// <summary>ジャンプ中にジャンプボタンを押したときの上昇速度減少率</summary>
+    [SerializeField] float m_gravityDrag = 8f;
+    Rigidbody2D m_rb = default;
+    float m_h = 0f;//Horizontalの変数名
+    /// <summary>設置フラグ</summary>
+    bool m_isGrounded = false;
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        m_rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        float HorizontalKey = Input.GetAxis("Horizontal");
-        //Dを押したら右に移動する
-        if (HorizontalKey > 0)
+        m_h = Input.GetAxis("Horizontal");
+        Vector2 velocity = m_rb.velocity;
+        //ジャンプ処理
+        if (Input.GetButtonDown("Jump") && m_isGrounded)
         {
-            xSpeed += Speed;
+            m_isGrounded = false;
+            velocity.y = m_jumpSpeed;
         }
-        //Aを押したら左に移動する
-        else if (HorizontalKey < 0)
+        else if(!Input.GetButton("Jump") && velocity.y > 0)
         {
-            xSpeed -= Speed;
+            //上昇中にジャンプボタンを離したら上昇を減速する
+            velocity.y *= m_gravityDrag;
         }
-        else
-        {
-            xSpeed = 0;
-        }
-        rb.velocity = new Vector2(xSpeed, rb.velocity.y);
+        m_rb.velocity = velocity;
+    }
+
+    private void FixedUpdate()
+    {
+        m_rb.AddForce(m_h * m_speed * Vector2.right);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        m_isGrounded = true;
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        m_isGrounded = false;
     }
 }
