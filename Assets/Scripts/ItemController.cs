@@ -13,7 +13,11 @@ public class ItemController : MonoBehaviour
     }
     void Update()
     {
-        
+        //Rキーを押したらデストロイさせる
+        if (Input.GetKey(KeyCode.R))
+        {
+            Destroy();
+        }
     }
     public void Destroy()
     {
