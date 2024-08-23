@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Enemy"))
         {
             //ここにプレイヤーのHPを減らす処理を書く
-            //プレイヤーのHPは3にする（ストック性）
             m_hp -= 1;
             if (m_hp == 0)
             {

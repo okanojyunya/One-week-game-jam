@@ -11,35 +11,25 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
-        //nullチェックを入れる
-        //NullCheck();
-
     }
     void Update()
     {
-        //プレイヤーとの距離が0.1f未満になったらそれ以上実行しない
-        if (Vector2.Distance(transform.position, playerTr.position) < 0.1f)
-            return;
             
         //プレイヤーに向けて進む
-        transform.position = Vector2.MoveTowards(
+        if(playerTr != null)
+        {
+            transform.position = Vector2.MoveTowards(
             transform.position,
             new Vector2(playerTr.position.x, playerTr.position.y),
             speed * Time.deltaTime);
+        }
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             GameObject.Destroy(gameObject);
-        }
-    }
-    /// <summary>nullチェックのコード/summary>
-    void NullCheck()
-    { 
-        if (playerTr == null)
-        {
-            transform.position = Vector2.zero;
         }
     }
 }
