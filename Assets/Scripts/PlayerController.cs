@@ -44,19 +44,25 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        m_isGrounded = true;
-        if (GameObject.FindGameObjectWithTag("Enemy"))
+        if (collision.gameObject.tag == "Enemy")
         {
-            //‚±‚±‚ÉƒvƒŒƒCƒ„[‚ÌHP‚ğŒ¸‚ç‚·ˆ—‚ğ‘‚­
             m_hp -= 1;
+            Debug.LogWarning("“G‚É“–‚½‚Á‚Ä‚¢‚é");
             if (m_hp == 0)
             {
                 GameObject.Destroy(gameObject);
             }
         }
+        if (collision.gameObject.tag == "Ground")
+        {
+            m_isGrounded = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        m_isGrounded = false;
+        if (collision.gameObject.tag == "Ground")
+        {
+            m_isGrounded = false;
+        }
     }
 }
