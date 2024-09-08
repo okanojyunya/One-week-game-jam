@@ -35,6 +35,7 @@ public class ItemController : MonoBehaviour
         //プレイヤーが触れたらアイテムスロットに移動する
         if (collision.CompareTag("Player"))
         {
+            transform.parent = GameObject.Find("ItemSet").transform;
             var ipos = ItemManage.instance.ItemSlot.transform.position;
             pos.x = ipos.x;
             pos.y = ipos.y;
