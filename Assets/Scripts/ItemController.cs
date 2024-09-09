@@ -39,7 +39,7 @@ public class ItemController : MonoBehaviour
             var ipos = ItemManage.instance.ItemSlot.transform.position;
             pos.x = ipos.x;
             pos.y = ipos.y;
-            pos.z = 0;
+            pos.z = 10;
             m_get = true;
             transform.position = pos;
         }
