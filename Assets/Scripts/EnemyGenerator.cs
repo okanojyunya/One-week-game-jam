@@ -18,5 +18,9 @@ public class EnemyGenerator : MonoBehaviour
             m_time = 0;
             Instantiate(m_enemyPrefab, gameObject.transform.position, Quaternion.identity);
         }
+        if(GameObject.Find("Player") == null)
+        {
+            Destroy(gameObject);
+        }
     }
 }
