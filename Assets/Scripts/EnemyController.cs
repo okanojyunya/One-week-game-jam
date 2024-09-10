@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager.UI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -8,6 +9,7 @@ public class EnemyController : MonoBehaviour
 {
     Transform playerTr;//プレイヤーのTransform
     [SerializeField] float speed = 2f;//敵の動くスピード
+    public EnemyDestroy enemyDestroyPrefab;
     void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
@@ -23,7 +25,6 @@ public class EnemyController : MonoBehaviour
             new Vector2(playerTr.position.x, playerTr.position.y),
             speed * Time.deltaTime);
         }
-        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,5 +32,9 @@ public class EnemyController : MonoBehaviour
         {
             GameObject.Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        Instantiate(enemyDestroyPrefab, this.transform.position, Quaternion.identity);
     }
 }
