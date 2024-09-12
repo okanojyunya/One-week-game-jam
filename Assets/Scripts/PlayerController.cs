@@ -1,28 +1,36 @@
 using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     /// <summary>プレイヤーのHP</summary>
     [SerializeField] int m_hp = 0;
     /// <summary>移動力</summary>
-    [SerializeField] float m_speed = 3f;
+    [SerializeField] public float m_speed = 3f;
     /// <summary>ジャンプ速度</summary>
     [SerializeField] float m_jumpSpeed = 5f;
     /// <summary>ジャンプ中にジャンプボタンを押したときの上昇速度減少率</summary>
     [SerializeField] float m_gravityDrag = 8f;
+    /// <summary>オーディオソース</summary>
+    [SerializeField] AudioSource audioSource;
+    /// <summary>音の素材</summary>
+    [SerializeField] AudioClip footstepSound;
     Rigidbody2D m_rb = default;
+    public Slider slider = default;//スライダーの変数
     SpriteRenderer m_sprite;//スプライトレンダラーの変数
     Animator anim;//アニメーターの変数名
     float m_h = 0f;//Horizontalの変数名
     /// <summary>設置フラグ</summary>
     bool m_isGrounded = false;
+    int maxhp = 3;
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
         m_sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        slider.value = maxhp;
+        m_hp = maxhp;
     }
     void Update()
     {
@@ -52,7 +60,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             m_hp -= 1;
+            slider.value = m_hp;
+            m_sprite.color = Color.red;
             Debug.LogWarning("敵に当たっている");
+            Invoke("back", 0.2f);
             if (m_hp == 0)
             {
                 GameObject.Destroy(gameObject);
@@ -83,5 +94,13 @@ public class PlayerController : MonoBehaviour
             anim.SetFloat("SpeedY", m_rb.velocity.y);
             anim.SetBool("isGuronded", m_isGrounded);
         }
+    }
+    public void PlayFootstepSound()
+    {
+        audioSource.PlayOneShot(footstepSound);
+    }
+    void back()
+    {
+        m_sprite.color = Color.white;
     }
 }

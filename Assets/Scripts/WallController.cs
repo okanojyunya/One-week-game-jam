@@ -9,6 +9,7 @@ public class WallController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        GetComponent<AudioSource>().Play();
         _actions.Invoke();
     }
     public void Destroy()

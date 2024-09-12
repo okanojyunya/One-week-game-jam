@@ -14,7 +14,7 @@ public class ItemController : MonoBehaviour
         //Rキーを押したらデストロイさせる
         if (m_get == true)
         {
-            if (Input.GetKey(KeyCode.R))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 Destroy();
                 GameObject.Destroy(gameObject);
@@ -42,6 +42,7 @@ public class ItemController : MonoBehaviour
             pos.z = 10;
             m_get = true;
             transform.position = pos;
+            GetComponent<AudioSource>().Play();
         }
         
     }

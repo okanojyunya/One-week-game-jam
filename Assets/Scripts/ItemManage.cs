@@ -11,4 +11,11 @@ public class ItemManage : MonoBehaviour
     {
         instance = this;
     }
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            GetComponent<AudioSource>().Play();
+        }
+    }
 }

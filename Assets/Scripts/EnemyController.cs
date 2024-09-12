@@ -35,6 +35,7 @@ public class EnemyController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Instantiate(enemyDestroyPrefab, this.transform.position, Quaternion.identity);
         if (GameObject.FindGameObjectWithTag("Player"))
         {
             GameObject.Destroy(gameObject);
@@ -47,6 +48,8 @@ public class EnemyController : MonoBehaviour
     private void OnDestroy()
     {
         if(!isQuitting)
-        Instantiate(enemyDestroyPrefab, this.transform.position, Quaternion.identity);
+        {
+            Instantiate(enemyDestroyPrefab, this.transform.position, Quaternion.identity);
+        }
     }
 }
