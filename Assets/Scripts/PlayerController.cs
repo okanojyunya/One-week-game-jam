@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,12 +13,14 @@ public class PlayerController : MonoBehaviour
     /// <summary>ジャンプ中にジャンプボタンを押したときの上昇速度減少率</summary>
     [SerializeField] float m_gravityDrag = 8f;
     Rigidbody2D m_rb = default;
+    SpriteRenderer m_sprite;//スプライトレンダラーの変数
     float m_h = 0f;//Horizontalの変数名
     /// <summary>設置フラグ</summary>
     bool m_isGrounded = false;
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_sprite = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
@@ -63,6 +66,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             m_isGrounded = false;
+        }
+    }
+    private void LateUpdate()
+    {
+        //キャラクターの左右の向き制御
+        if(m_h != 0)
+        {
+            m_sprite.flipX = (m_h < 0);
         }
     }
 }
