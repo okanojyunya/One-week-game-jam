@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_gravityDrag = 8f;
     Rigidbody2D m_rb = default;
     SpriteRenderer m_sprite;//スプライトレンダラーの変数
+    Animator anim;//アニメーターの変数名
     float m_h = 0f;//Horizontalの変数名
     /// <summary>設置フラグ</summary>
     bool m_isGrounded = false;
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody2D>();
         m_sprite = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -74,6 +76,12 @@ public class PlayerController : MonoBehaviour
         if(m_h != 0)
         {
             m_sprite.flipX = (m_h < 0);
+        }
+        if(anim)
+        {
+            anim.SetFloat("SpeedX", Mathf.Abs(m_rb.velocity.x));
+            anim.SetFloat("SpeedY", m_rb.velocity.y);
+            anim.SetBool("isGuronded", m_isGrounded);
         }
     }
 }
