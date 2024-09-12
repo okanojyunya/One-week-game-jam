@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     Transform playerTr;//プレイヤーのTransform
     [SerializeField] float speed = 2f;//敵の動くスピード
     public EnemyDestroy enemyDestroyPrefab;
+    private static bool isQuitting = false;
     void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,8 +34,13 @@ public class EnemyController : MonoBehaviour
             GameObject.Destroy(gameObject);
         }
     }
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
     private void OnDestroy()
     {
+        if(!isQuitting)
         Instantiate(enemyDestroyPrefab, this.transform.position, Quaternion.identity);
     }
 }
