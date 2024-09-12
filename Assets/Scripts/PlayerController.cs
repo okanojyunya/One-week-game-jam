@@ -1,6 +1,6 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     /// <summary>音の素材</summary>
     [SerializeField] AudioClip footstepSound;
+    /// <summary>変化させる秒数</summary>
+    [SerializeField] float changeInterval = 1.0f;
+    /// <summary>敵に与えられるダメージ</summary>
+    [SerializeField] float damege = 0;
     Rigidbody2D m_rb = default;
     public Slider slider = default;//スライダーの変数
     SpriteRenderer m_sprite;//スプライトレンダラーの変数
@@ -23,14 +27,14 @@ public class PlayerController : MonoBehaviour
     float m_h = 0f;//Horizontalの変数名
     /// <summary>設置フラグ</summary>
     bool m_isGrounded = false;
-    int maxhp = 3;
+    //int maxhp = 3;
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
         m_sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        slider.value = maxhp;
-        m_hp = maxhp;
+        //slider.value = maxhp;
+        //m_hp = maxhp;
     }
     void Update()
     {
@@ -59,12 +63,13 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            m_hp -= 1;
-            slider.value = m_hp;
+            //m_hp -= 1;
+            //slider.value = m_hp;
+            Change(damege);
             m_sprite.color = Color.red;
             Debug.LogWarning("敵に当たっている");
             Invoke("back", 0.2f);
-            if (m_hp == 0)
+            if (slider.value == 1f)
             {
                 GameObject.Destroy(gameObject);
             }
@@ -102,5 +107,21 @@ public class PlayerController : MonoBehaviour
     void back()
     {
         m_sprite.color = Color.white;
+    }
+    /// <summary>
+    /// ゲージを減らす
+    /// </summary>
+    /// <param name="value"></param>
+    public void Change(float value)
+    {
+        ValueChange(slider.value + value);
+    }
+    public void Fill()//ゲージを満タン
+    {
+        ValueChange(m_hp);
+    }
+    void ValueChange(float value)
+    {
+        DOTween.To(() => slider.value,x => slider.value = x,value, changeInterval);
     }
 }
