@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  enemyDestroyPrefab: {fileID: 0}
 --- !u!58 &7684473271267527353
 CircleCollider2D:
   m_ObjectHideFlags: 0

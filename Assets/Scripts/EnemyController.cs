@@ -10,10 +10,12 @@ public class EnemyController : MonoBehaviour
     Transform playerTr;//プレイヤーのTransform
     [SerializeField] float speed = 2f;//敵の動くスピード
     public EnemyDestroy enemyDestroyPrefab;
+    SpriteRenderer spr;
     private static bool isQuitting = false;
     void Start()
     {
         playerTr = GameObject.FindGameObjectWithTag("Player").transform;
+        spr = GetComponent<SpriteRenderer>();
     }
     void Update()
     {
@@ -25,6 +27,10 @@ public class EnemyController : MonoBehaviour
             transform.position,
             new Vector2(playerTr.position.x, playerTr.position.y),
             speed * Time.deltaTime);
+            if(playerTr.position.x > transform.position.x)
+            {
+                spr.flipX = true;
+            }
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
